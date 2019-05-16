@@ -1,0 +1,32 @@
+{
+	"name": "beat-beat-js",
+	"version": "0.0.0",
+	"description": "A zero dependency song beat detector for javascript using WebAudioAPI",
+	"main": "lib/beat-beat.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "tsc"
+	},
+	"keywords": [
+		"beat",
+		"detector",
+		"js",
+		"ts",
+		"song",
+		"music",
+		"webAudioAPI"
+	],
+	"author": "Blai Samitier <blai.samitier@gmail.com>",
+	"homepage": "https://samitier.github.io",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Samitier/beat-beat-js.git"
+	},
+	"devDependencies": {
+		"prettier": "^1.16.4",
+		"tslint": "^5.13.1",
+		"tslint-config-prettier": "^1.18.0",
+		"typescript": "^3.3.3333"
+	},
+	"license": "ISC"
+}

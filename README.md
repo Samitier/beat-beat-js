@@ -1,12 +1,28 @@
-#Beat-Beat JS
+# Beat-Beat JS
 
-Do you want to make things move with your music? This is a very simple library to analyze and detect the beats of a song.
+Do you want to make things move with your music? This is a very simple js library to analyze and detect the beats of a song.
 
-Using the WebAudioAPI and a couple of filters, this lib is capable of analyzing the parts of a song that may mark the rythm of a song.
-It then executes a callback each time the song reaches a beat.
+Using the WebAudioAPI and a couple of filters, this library is capable of analyzing the low frequencies of a song to try to infer its tempo. It then executes a callback each time the song reaches a beat.
 
-Depending on the genre of the song, this lib may not work. It usually works better with songs with deep percussion, like techno, house, etc.
+## Usage
 
-## Configuration
+Install:
 
-Coming soon.
+```
+npm i beat-beat-js
+```
+
+Load a song and play it:
+
+```
+import BeatBeat from "beat-beat-js"
+
+const sound = new BeatBeat(
+  new AudioContext(),
+  "path-to-a-song-file.mp3"
+)
+await sound.load()
+
+sound.play(() => console.log("This callback will execute at every beat of the song"))
+
+```

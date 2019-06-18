@@ -3,6 +3,7 @@
 	"rules": {
 		"curly": false,
 		"variable-name": false,
-		"interface-name": false
+		"interface-name": false,
+		"member-access": false
 	}
 }

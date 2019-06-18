@@ -5,9 +5,9 @@ export default class BeatBeat {
 	private offlineContext!: OfflineAudioContext
 	private buffer!: AudioBuffer
 	private songData: any[] = []
+	private context = new AudioContext()
 
 	constructor(
-		private context: AudioContext,
 		private name: string,
 		private filterFrequency = 100,
 		private peakGain = 15,
@@ -79,7 +79,7 @@ export default class BeatBeat {
 		}
 	}
 
-	private animate(cb: any) {
+	private animate(cb: (time: number) => void) {
 		this.songData.forEach((d, i) => {
 			const time = i === this.songData.length - 1
 				? d.time

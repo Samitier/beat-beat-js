@@ -1,7 +1,6 @@
 import Vue from "vue"
 import Router from "vue-router"
 import Home from "./views/home.vue"
-import Head from "./views/head/head.vue"
 
 Vue.use(Router)
 
@@ -13,9 +12,14 @@ export default new Router({
 			component: Home,
 		},
 		{
+			path: "/plant",
+			name: "plant",
+			component: () => import(/* webpackChunkName: "plant" */ "./views/plant.vue"),
+		},
+		{
 			path: "/head",
 			name: "head",
-			component: Head,
+			component: () => import(/* webpackChunkName: "head" */ "./views/head/head.vue"),
 		}
 	],
 })

@@ -17,10 +17,8 @@ Load a song and play it:
 ```
 import BeatBeat from "beat-beat-js"
 
-const sound = new BeatBeat(
-  new AudioContext(),
-  "path-to-a-song-file.mp3"
-)
+const sound = new BeatBeat("path-to-a-song-file.mp3")
+
 await sound.load()
 
 sound.play(() => console.log("This callback will execute at every beat of the song"))

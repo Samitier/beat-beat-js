@@ -10,6 +10,7 @@ import { Component, Vue } from "vue-property-decorator"
 export default class App extends Vue {}
 </script>
 <style lang="stylus">
-body
+html, body
  margin 0
+ width 100%
 </style>

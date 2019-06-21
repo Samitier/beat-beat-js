@@ -6,6 +6,7 @@ export default class BeatBeat {
 	private buffer!: AudioBuffer
 	private songData: any[] = []
 	private context = new AudioContext()
+	private callbacks: number[] = []
 
 	constructor(
 		private name: string,
@@ -35,6 +36,11 @@ export default class BeatBeat {
 		source.connect(this.context.destination)
 		source.start()
 		this.animate(cb)
+	}
+
+	destroy() {
+		for(let cb of this.callbacks) clearTimeout(cb)
+		this.context.close()
 	}
 
 	private async analyze() {
@@ -84,7 +90,7 @@ export default class BeatBeat {
 			const time = i === this.songData.length - 1
 				? d.time
 				: this.songData[i + 1].time - d.time
-			setTimeout(() => cb(time), d.time * 1000)
+			this.callbacks.push(setTimeout(() => cb(time), d.time * 1000))
 		})
 	}
 }

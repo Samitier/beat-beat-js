@@ -1,6 +1,17 @@
 <template>
   <div class="home">
-	  <div class="circle" @click="!sound.isPlaying && play()" v-if="!isLoading">
+	  <div class="song-name">
+		  CASUALTY <small>pional</small>
+	  </div>
+	  <div class="loading" v-if="isLoading">
+		  Loading...
+	  </div>
+	  <div
+		class="circle"
+		  :class="circleClass"
+		  @click="!sound.isPlaying && play()"
+		  v-if="!isLoading"
+		>
 		  <div class="plant1" :style="plantStyle" :class="plantClass">
 		  	<img src="/img/leaf1-1.png" class="plant leaf1-1" :style="leafStyleSm">
 		  	<img src="/img/leaf1-2.png" class="plant leaf1-2" :style="leafStyleSm">
@@ -12,6 +23,9 @@
 		  	<img src="/img/leaf2-1.png" class="plant leaf2-1" :style="leafStyle">
 		  	<img src="/img/leaf2-2.png" class="plant leaf2-2" :style="leafStyle">
 		  </div>
+			<div class="info" v-if="!sound.isPlaying">
+			Click the plant to start
+			</div>
 	  </div>
   </div>
 </template>
@@ -48,6 +62,10 @@ export default class Plant extends Vue {
 		return { transform: `rotateZ(${ 6 * (this.isTick ? 1 : -1) }deg)` }
 	}
 
+	get circleClass() {
+		return { beat: this.isTick }
+	}
+
 	async mounted() {
 		await this.sound.load()
 		this.isLoading = false
@@ -57,6 +75,10 @@ export default class Plant extends Vue {
 		this.sound.play(this.onAnimate.bind(this))
 	}
 
+	destroyed() {
+		this.sound.destroy()
+	}
+
 	private onAnimate(time: number) {
 		this.time = time
 		this.isTick = !this.isTick
@@ -64,6 +86,14 @@ export default class Plant extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
+.song-name
+	font-size 3.4em
+	font-weight bolder
+	background-color black
+	color lightblue
+	padding .7rem 0
+	small
+		font-size 2rem
 .home
 	position fixed
 	left 0
@@ -71,18 +101,22 @@ export default class Plant extends Vue {
 	bottom 0
 	top 0
 	background lightblue
+	text-align center
 .circle
+	cursor pointer
 	width 280px
 	height 280px
 	transform translateY(-50%)
 	position absolute
 	left 0
 	right 0
-	top 50%
+	top 56%
 	margin 2em auto
 	border 22px solid black
 	background-color white
 	border-radius 50%
+	&.beat
+		animation shadowAnim 0.2s
 .plant1
 	position absolute
 	left -198px
@@ -127,5 +161,17 @@ export default class Plant extends Vue {
 .leaf1-2
 	transform-origin 58% 52%
 	transition all 1.5s
+.loading
+	padding 3em 0
+.info
+	position absolute
+	bottom -4em
+	left 0
+	right 0
+@keyframes shadowAnim
+	from
+		box-shadow 0 0 0 rgba(0,0,0,0.7)
+	to
+		box-shadow 0 0 40px 20px rgba(0,0,0,0.01)
 </style>
 

@@ -1,7 +1,11 @@
 <template>
 	<div class="home">
 		<div class="main-container">
-			<h1 class="fade-in d-1">beat beat js</h1>
+			<h1 class="fade-in d-1" :class="cssClass">
+				<span class="f1">beat</span> 
+				<span class="f2"> beat</span> 
+				<span class="f3"> js</span>
+			</h1>
 			<h2 class="fade-in d-2">A song beat detector for javascript</h2>
 
 			<code class="fade-in d-3">
@@ -19,7 +23,7 @@
 				<div class="comment tab">// The callback will execute at every beat</div>
 				})
 				<div class="examples" :class="hiddenClass">
-					<div class="comment">// Select an example to view motion with music</div>
+					<div class="comment">// Select an example (use headphones!)</div>
 					Examples: 
 					<a @click="play">Ink</a>
 					<router-link to="plant">Plant</router-link>
@@ -32,8 +36,9 @@
 					<a href="https://github.com/samitier/beat-beat-js/issues"> Report an issue</a>
 				</div>
 			</code>
+			<div class="song-name fade-in" v-if="sound.isPlaying">Baltra - Fade Away</div>
 		</div>
-		<video ref="video" src="/video/ink-2.mp4"></video>
+		<video ref="video" src="/video/ink-2.mp4" loop></video>
 	</div>
 </template>
 
@@ -45,10 +50,16 @@ import BeatBeat from "../../../src/beat-beat"
 export default class Home extends Vue {
 
 	isLoading = true
-	private sound: BeatBeat = new BeatBeat("/sounds/Pional-Tempest.mp3")
+
+	private frame = 0
+	private sound: BeatBeat = new BeatBeat("/sounds/Baltra-FadeAway.mp3")
 
 	get hiddenClass() {
 		return { visible: !this.isLoading }
+	}
+
+	get cssClass() {
+		return { ["f" + this.frame]: true }
 	}
 
 	async mounted() {
@@ -56,16 +67,19 @@ export default class Home extends Vue {
 		this.isLoading = false
 	}
 
+	destroyed() {
+		this.sound.destroy()
+	}
+
 	play() {
 		if (this.sound.isPlaying) return
 		const video = this.$refs.video as HTMLVideoElement
 		const times = [0, 1.1, 3.1, 6.2]
-		let frame = 0
 		this.sound.play((time: number) => {
-			video.currentTime = times[frame]
+			video.currentTime = times[this.frame]
 			video.play()
-			++frame
-			if (frame >= times.length) frame = 0
+			++this.frame
+			if (this.frame >= times.length) this.frame = 0
 		})
 	}
 }
@@ -89,6 +103,7 @@ video
 	height 100%
 	margin-left auto
 	right -8em
+	filter blur(1px)
 .main-container
 	position fixed
 	padding 2em
@@ -102,6 +117,12 @@ video
 	h1
 		font-size 3em
 		font-weight 900
+		&.f1 .f1
+			opacity 0.7
+		&.f2 .f2
+			opacity 0.7
+		&.f3 .f3
+			opacity 0.7
 	h1, h2
 		margin 0
 	h2
@@ -142,10 +163,23 @@ code
 		animation-delay 0.45s
 	&.d-3
 		animation-delay 0.75s
-
+.song-name
+	position absolute
+	right 0
+	bottom 0
+	font-family Lato
+	padding 1em
+	font-size .85em
 @keyframes fadeInAnim
 	from
 		opacity 0
 	to
 		opacity 1
+@keyframes beatLeft
+	0%
+		transform translateX(0)
+	50%
+		transform translateX(-5px)
+	100%
+		transform translate(0%)
 </style>

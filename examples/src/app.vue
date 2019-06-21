@@ -13,4 +13,6 @@ export default class App extends Vue {}
 html, body
  margin 0
  width 100%
+body
+	font-family Lato
 </style>

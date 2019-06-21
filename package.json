@@ -5,7 +5,8 @@
 	"main": "lib/beat-beat.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "tsc"
+		"build": "tsc",
+		"build:examples": "cd examples && npm install && npm run build"
 	},
 	"keywords": [
 		"beat",

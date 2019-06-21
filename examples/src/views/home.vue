@@ -27,7 +27,7 @@
 					Examples: 
 					<a @click="play">Ink</a>
 					<router-link to="plant">Plant</router-link>
-					<router-link to="head">Head</router-link>
+					<!-- <router-link to="head">Head</router-link> -->
 				</div>
 				<div class="examples" :class="hiddenClass">
 					<div class="comment">// Other useful links</div>

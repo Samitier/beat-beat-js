@@ -28,5 +28,6 @@
 		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^3.3.3333"
 	},
-	"license": "ISC"
+	"license": "ISC",
+	"type": "module"
 }
